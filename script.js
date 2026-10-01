@@ -3,7 +3,7 @@ inputfile=document.getElementById('inputfile');
 inputfile.addEventListener('change',(e)=>{
     const file=e.target.files[0];
     inpimg.src=URL.createObjectURL(file);
-})
+}) //image uploading
 const otptimg=new Image();
 otptimg.src='output.jpg';
 const inputcanvas=document.getElementById('inputcanvas');
@@ -14,7 +14,7 @@ const ctx3=intercanvas2.getContext('2d');
 const ctx5=outputcanvas.getContext('2d');
 
 
-const ctx6=document.getElementById('animated').getContext('2d');
+const finalimg=document.getElementById('animated').getContext('2d');
 
 var brightnessinpt=[]
 var brightnessoutpt=[]
@@ -28,7 +28,7 @@ inpimg.onload=()=>{
     ctx.drawImage(inpimg,0,0,inputcanvas.width,inputcanvas.height);
     const uarray=ctx.getImageData(0,0,inputcanvas.width,inputcanvas.height).data;
     const array=Array.from(uarray);
-    
+    //taking the input image pixel data into array of format [r,g,b,a,r,g,b,a,...]
     for (let i=0;i<array.length;i+=4){
         const r=array[i]/255;
         const g=array[i+1]/255;
@@ -118,7 +118,7 @@ function tick(now){
 })
 
 function animate(t){
-    const test=ctx6.createImageData(outputcanvas.width,outputcanvas.height);
+    const test=finalimg.createImageData(outputcanvas.width,outputcanvas.height);
 const tdata=test.data;
 //new image data for the animated stuff
 
@@ -149,6 +149,6 @@ tdata[ptr+3]=sorted[k].a*255
 //actually assigning the intermediate values to the pixel array
 }
 
-ctx6.putImageData(test,0,0)
+finalimg.putImageData(test,0,0)
 }
 
