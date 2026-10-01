@@ -7,19 +7,23 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="inputdiv">
-                <canvas id="inputcanvas" width="480" height="480"></canvas>
+    <h1>morphixel</h1>
+    <p>select an image (prefferably a square one, tho rectangles will get squished anyways), and click on submit to watch your image morph into a ghost!</p>
 
-        <input type="file" id="inputfile" accept="image/*">
-    </div>
-    <canvas id="intercanvas2" width="480" height="480" style="display: none;"></canvas>
-    <div class="div2">
+    <div class="maindiv">
+        <div class="inputdiv">
+                    <canvas id="inputcanvas" width="480" height="480"></canvas>
+            <input type="file" id="inputfile" accept="image/*">
+        </div>
+        <canvas id="intercanvas2" width="480" height="480" style="display: none;"></canvas>
+        <div class="div2">
         
-        <canvas id="outputcanvas" width="480" height="480" style="display:none"></canvas>
-        <canvas id="animated" width="480" height="480" ></canvas>
-        <button id="submit">Submit</button>
+            <canvas id="outputcanvas" width="480" height="480" style="display:none"></canvas>
+            <canvas id="animated" width="480" height="480" ></canvas>
+            <button id="submit">Submit</button>
+        </div>
+        
     </div>
-    
     <script src="script.js"></script>
 </body>
 </html>
