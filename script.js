@@ -15,6 +15,7 @@ const ctx5=outputcanvas.getContext('2d');
 var brightnessinpt=[]
 var brightnessoutpt=[]
 
+var sorted=[]
 
 inpimg.onload=()=>{
     ctx.drawImage(inpimg,0,0,inputcanvas.width,inputcanvas.height);
@@ -31,7 +32,7 @@ inpimg.onload=()=>{
 }
 
 
-const sorted=brightnessinpt.sort((a,b)=>b.bri-a.bri);
+sorted=brightnessinpt.sort((a,b)=>b.bri-a.bri);
 
 const newimagedata=ctx2.createImageData(inputcanvas.width,inputcanvas.height);
 const newpixels=newimagedata.data;
@@ -56,22 +57,36 @@ otptimg.onload=()=>{
         const g=array[i+1]/255;
         const b=array[i+2]/255;
         const a=array[i+3]/255;
-        brightnessoutpt.push({r:r,g:g,b:b,a:a, bri:(0.2176*r+0.7152*g+0.0722*b)});
+        brightnessoutpt.push({r:r,g:g,b:b,a:a, bri:(0.2176*r+0.7152*g+0.0722*b), loc:(i)});
   
 }
 
-
-const sorted=brightnessoutpt.sort((a,b)=>b.bri-a.bri);
+const orig=brightnessoutpt
+const sorted2=brightnessoutpt.sort((a,b)=>b.bri-a.bri);
 
 const newimagedata=ctx4.createImageData(outputcanvas.width,outputcanvas.height);
 const newpixels=newimagedata.data;
 for (let i=0;i<newpixels.length;i+=4){
-    newpixels[i]=sorted[i/4].r*255;
-    newpixels[i+1]=sorted[i/4].g*255;
-    newpixels[i+2]=sorted[i/4].b*255;
-    newpixels[i+3]=sorted[i/4].a*255;
+    newpixels[i]=sorted2[i/4].r*255;
+    newpixels[i+1]=sorted2[i/4].g*255;
+    newpixels[i+2]=sorted2[i/4].b*255;
+    newpixels[i+3]=sorted2[i/4].a*255;
 }
 ctx4.putImageData(newimagedata,0,0);
 
+
+const final=ctx5.createImageData(outputcanvas.width,outputcanvas.height);
+const finalpixels=final.data;
+for (let i=0;i<finalpixels.length;i+=4){
+    const location=orig[i/4].loc;
+    finalpixels[location]=sorted[i/4].r*255;
+    finalpixels[location+1]=sorted[i/4].g*255;
+    finalpixels[location+2]=sorted[i/4].b*255;
+    finalpixels[location+3]=sorted[i/4].a*255;
+
+
+
+}
+ctx5.putImageData(final,0,0);
 }
 
