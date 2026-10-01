@@ -5,7 +5,7 @@ inputfile.addEventListener('change',(e)=>{
     inpimg.src=URL.createObjectURL(file);
 })
 const otptimg=new Image();
-otptimg.src='/output.jpg';
+otptimg.src='output.jpg';
 const inputcanvas=document.getElementById('inputcanvas');
 const intercanvas2=document.getElementById('intercanvas2');
 const outputcanvas=document.getElementById('outputcanvas');
