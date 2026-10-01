@@ -1,5 +1,9 @@
 const inpimg=new Image();
-inpimg.src='/input.jpg';
+inputfile=document.getElementById('inputfile');
+inputfile.addEventListener('change',(e)=>{
+    const file=e.target.files[0];
+    inpimg.src=URL.createObjectURL(file);
+})
 const otptimg=new Image();
 otptimg.src='/output.jpg';
 const inputcanvas=document.getElementById('inputcanvas');
@@ -14,6 +18,7 @@ var brightnessoutpt=[]
 var sorted=[]
 
 inpimg.onload=()=>{
+    brightnessinpt = [];
     ctx.drawImage(inpimg,0,0,inputcanvas.width,inputcanvas.height);
     const uarray=ctx.getImageData(0,0,inputcanvas.width,inputcanvas.height).data;
     const array=Array.from(uarray);
@@ -35,6 +40,7 @@ sorted=brightnessinpt.sort((a,b)=>b.bri-a.bri);
 
 
 otptimg.onload=()=>{
+    brightnessoutpt = [];
     ctx3.drawImage(otptimg,0,0,intercanvas2.width,intercanvas2.height);
     const uarray=ctx3.getImageData(0,0,intercanvas2.width,intercanvas2.height).data;
     const array=Array.from(uarray);
@@ -50,7 +56,12 @@ otptimg.onload=()=>{
 
 brightnessoutpt.sort((a,b)=>b.bri-a.bri);
 
-const final=ctx5.createImageData(outputcanvas.width,outputcanvas.height);
+
+}
+
+const submit=document.getElementById("submit")
+submit.addEventListener("click", ()=>{
+    const final=ctx5.createImageData(outputcanvas.width,outputcanvas.height);
 const finalpixels=final.data;
 for (let i=0;i<finalpixels.length;i+=4){
     const location=brightnessoutpt[i/4].loc;
@@ -62,6 +73,7 @@ for (let i=0;i<finalpixels.length;i+=4){
 
 
 }
-ctx5.putImageData(final,0,0);
-}
+ctx5.clearRect(0, 0, outputcanvas.width, outputcanvas.height);
+ctx5.putImageData(final,0,0);   
+})
 
