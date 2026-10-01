@@ -14,7 +14,7 @@ const ctx3=intercanvas2.getContext('2d');
 const ctx5=outputcanvas.getContext('2d');
 
 
-const ctx6=document.getElementById('test').getContext('2d');
+const ctx6=document.getElementById('animated').getContext('2d');
 
 var brightnessinpt=[]
 var brightnessoutpt=[]
@@ -22,6 +22,8 @@ var brightnessoutpt=[]
 var sorted=[]
 
 inpimg.onload=()=>{
+    ctx.clearRect(0, 0, outputcanvas.width, outputcanvas.height);
+
     brightnessinpt = [];
     ctx.drawImage(inpimg,0,0,inputcanvas.width,inputcanvas.height);
     const uarray=ctx.getImageData(0,0,inputcanvas.width,inputcanvas.height).data;
@@ -32,7 +34,7 @@ inpimg.onload=()=>{
         const g=array[i+1]/255;
         const b=array[i+2]/255;
         const a=array[i+3]/255;
-        brightnessinpt.push({r:r,g:g,b:b,a:a, bri:(0.2176*r+0.7152*g+0.0722*b), loc:i});
+        brightnessinpt.push({r:r,g:g,b:b,a:a, bri:(0.2126*r+0.7152*g+0.0722*b), loc:i});
         //calculating the brightness of each pixel using the formula for its sensitifity to our eyes
   
 }
@@ -93,7 +95,14 @@ ctx5.putImageData(final,0,0);
 
 const totaltime=2000;
 //total time the animation runs
-const starttime=performance.now();
+
+
+let starttime
+animate(0) //to show the input image for some time, then start with the animation
+setTimeout(()=>{
+    starttime=performance.now();
+    requestAnimationFrame(tick);
+},1000)
 
 function tick(now){
     const t=Math.min((now-starttime)/totaltime,1);
@@ -104,7 +113,7 @@ function tick(now){
     }
 
 }
-    requestAnimationFrame(tick);  //just to start the loop
+
 
 })
 
